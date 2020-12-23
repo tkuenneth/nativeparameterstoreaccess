@@ -40,7 +40,7 @@ public final class NativeParameterStoreAccess {
 
     private NativeParameterStoreAccess() {
     }
-    
+
     /**
      * Gets an entry from the Windows registry.
      *
@@ -65,6 +65,16 @@ public final class NativeParameterStoreAccess {
             }
         }
         return result;
+    }
+
+    /**
+     * Gets an entry from the Defaults database.
+     *
+     * @param key the key, for example <code>"AppleInterfaceStyle"</code>
+     * @return the result or an empty string
+     */
+    public static String getDefaultsEntry(String key) {
+        return "";
     }
 
     private static boolean execute(StringBuilder sbIS,

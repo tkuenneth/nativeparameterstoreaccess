@@ -24,7 +24,7 @@
 package com.thomaskuenneth.nativeparameterstoreaccess;
 
 import static com.thomaskuenneth.nativeparameterstoreaccess.NativeParameterStoreAccess.getWindowsRegistryEntry;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assumptions.*;
  */
 public class NativeParameterStoreAccessTest {
 
-    private static final boolean IS_ON_WINDOWS = System.getProperty("os.name").contains("Windowt");
+    private static final boolean IS_ON_WINDOWS = System.getProperty("os.name").contains("Windows");
 
     /**
      * Test if the product name contains <code>Windows</code>
@@ -47,7 +47,6 @@ public class NativeParameterStoreAccessTest {
         String value = "ProductName";
         String type = "REG_SZ";
         String result = getWindowsRegistryEntry(key, value, type);
-        System.out.println(result);
         assertTrue(result.contains("Windows"));
     }
 }

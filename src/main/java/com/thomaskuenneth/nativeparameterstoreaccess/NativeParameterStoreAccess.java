@@ -74,7 +74,14 @@ public final class NativeParameterStoreAccess {
      * @return the result or an empty string
      */
     public static String getDefaultsEntry(String key) {
-        return "";
+        StringBuilder stdin = new StringBuilder();
+        StringBuilder stderr = new StringBuilder();
+        String result = null;
+        String cmd = String.format("defaults read -g %s", key);
+        if (execute(stdin, stderr, cmd)) {
+            result = stdin.toString();
+        }
+        return result;
     }
 
     private static boolean execute(StringBuilder sbIS,

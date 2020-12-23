@@ -28,11 +28,31 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class NativeParameterStoreAccess {
+/**
+ * Provides access to native parameter stores (Windows registry and macOS
+ * defaults).
+ *
+ * @author Thomas Kuenneth
+ */
+public final class NativeParameterStoreAccess {
 
     private static final Logger LOGGER = Logger.getLogger(NativeParameterStoreAccess.class.getPackageName());
 
-    public static String getWindowsRegistryEntry(String key, String value, String type) {
+    private NativeParameterStoreAccess() {
+    }
+    
+    /**
+     * Gets an entry from the Windows registry.
+     *
+     * @param key the key, for example
+     * <code>"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"</code>
+     * @param value the value, for example <code>"AppsUseLightTheme"</code>
+     * @param type the type, for example <code>"REG_DWORD"</code>
+     * @return the result or an empty string
+     */
+    public static String getWindowsRegistryEntry(String key,
+            String value,
+            String type) {
         StringBuilder stdin = new StringBuilder();
         StringBuilder stderr = new StringBuilder();
         String result = null;
@@ -47,7 +67,9 @@ public class NativeParameterStoreAccess {
         return result;
     }
 
-    private static boolean execute(StringBuilder sbIS, StringBuilder sbES, String cmd) {
+    private static boolean execute(StringBuilder sbIS,
+            StringBuilder sbES,
+            String cmd) {
         boolean success = false;
         try {
             Process p = Runtime.getRuntime().exec(cmd);

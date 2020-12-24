@@ -37,6 +37,17 @@ import java.util.logging.Logger;
 public final class NativeParameterStoreAccess {
 
     private static final Logger LOGGER = Logger.getLogger(NativeParameterStoreAccess.class.getPackageName());
+    private static final String OS_NAME_LC = System.getProperty("os.name", "").toLowerCase();
+
+    /**
+     * If running on Windows, <code>true</code> otherwise <code>false</code>
+     */
+    public static final boolean IS_WINDOWS = OS_NAME_LC.contains("windows");
+
+    /**
+     * If running on macOS, <code>true</code> otherwise <code>false</code>
+     */
+    public static final boolean IS_MACOS = OS_NAME_LC.contains("mac os x");
 
     private NativeParameterStoreAccess() {
     }
@@ -71,14 +82,16 @@ public final class NativeParameterStoreAccess {
             String value,
             String type,
             StringBuilder stderr) {
-        StringBuilder stdin = new StringBuilder();
         String result = null;
-        String cmd = String.format("reg query \"%s\" /v %s", key, value);
-        if (execute(stdin, stderr, cmd)) {
-            String temp = stdin.toString();
-            int pos = temp.indexOf(type);
-            if (pos >= 0) {
-                result = temp.substring(pos + type.length()).trim();
+        if (IS_WINDOWS) {
+            StringBuilder stdin = new StringBuilder();
+            String cmd = String.format("reg query \"%s\" /v %s", key, value);
+            if (execute(stdin, stderr, cmd)) {
+                String temp = stdin.toString();
+                int pos = temp.indexOf(type);
+                if (pos >= 0) {
+                    result = temp.substring(pos + type.length()).trim();
+                }
             }
         }
         return result;
@@ -104,11 +117,13 @@ public final class NativeParameterStoreAccess {
      */
     public static String getDefaultsEntry(String key,
             StringBuilder stderr) {
-        StringBuilder stdin = new StringBuilder();
         String result = null;
-        String cmd = String.format("defaults read -g %s", key);
-        if (execute(stdin, stderr, cmd)) {
-            result = stdin.toString().trim();
+        if (IS_MACOS) {
+            StringBuilder stdin = new StringBuilder();
+            String cmd = String.format("defaults read -g %s", key);
+            if (execute(stdin, stderr, cmd)) {
+                result = stdin.toString().trim();
+            }
         }
         return result;
     }

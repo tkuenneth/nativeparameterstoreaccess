@@ -35,9 +35,9 @@ import java.util.logging.Logger;
  * @author Thomas Kuenneth
  */
 public final class NativeParameterStoreAccess {
-
+    
     private static final Logger LOGGER = Logger.getLogger(NativeParameterStoreAccess.class.getPackageName());
-
+    
     private NativeParameterStoreAccess() {
     }
 
@@ -53,8 +53,26 @@ public final class NativeParameterStoreAccess {
     public static String getWindowsRegistryEntry(String key,
             String value,
             String type) {
-        StringBuilder stdin = new StringBuilder();
         StringBuilder stderr = new StringBuilder();
+        return getWindowsRegistryEntry(key, value, type, stderr);
+    }
+
+    /**
+     * Gets an entry from the Windows registry.
+     *
+     * @param key the key, for example
+     * <code>"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"</code>
+     * @param value the value, for example <code>"AppsUseLightTheme"</code>
+     * @param type the type, for example <code>"REG_DWORD"</code>
+     * @param stderr may contain error messages
+     * @return the result or an empty string
+     */
+    public static String getWindowsRegistryEntry(String key,
+            String value,
+            String type,
+            StringBuilder stderr) {
+        StringBuilder stdin = new StringBuilder();
+        stderr.setLength(0);
         String result = null;
         String cmd = String.format("reg query \"%s\" /v %s", key, value);
         if (execute(stdin, stderr, cmd)) {
@@ -79,11 +97,11 @@ public final class NativeParameterStoreAccess {
         String result = null;
         String cmd = String.format("defaults read -g %s", key);
         if (execute(stdin, stderr, cmd)) {
-            result = stdin.toString();
+            result = stdin.toString().trim();
         }
         return result;
     }
-
+    
     private static boolean execute(StringBuilder sbIS,
             StringBuilder sbES,
             String cmd) {
@@ -122,9 +140,6 @@ public final class NativeParameterStoreAccess {
             success = true;
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
-        }
-        if (sbES.length() > 0) {
-            LOGGER.log(Level.SEVERE, sbES.toString());
         }
         return success;
     }

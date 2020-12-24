@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.thomaskuenneth.nativeparameterstoreaccess;
+package com.github.tkuenneth.nativeparameterstoreaccess;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.thomaskuenneth.nativeparameterstoreaccess;
+package com.github.tkuenneth.nativeparameterstoreaccess;
 
-import static com.thomaskuenneth.nativeparameterstoreaccess.NativeParameterStoreAccess.*;
+import static com.github.tkuenneth.nativeparameterstoreaccess.NativeParameterStoreAccess.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;

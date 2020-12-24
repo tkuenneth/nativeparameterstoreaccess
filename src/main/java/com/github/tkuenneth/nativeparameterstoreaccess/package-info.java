@@ -4,4 +4,4 @@
  *
  * @author Thomas Kuenneth
  */
-package com.thomaskuenneth.nativeparameterstoreaccess;
+package com.github.tkuenneth.nativeparameterstoreaccess;

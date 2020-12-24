@@ -5,6 +5,36 @@
     <artifactId>nativeparameterstoreaccess</artifactId>
     <version>0.1.0</version>
     <packaging>jar</packaging>
+
+    <name>Native Parameter Store Access</name>
+    <description>
+        nativeparameterstoreaccess provides access to the Windows registry and
+        the macOS Defaults database.
+    </description>
+    <url>https://github.com/tkuenneth/nativeparameterstoreaccess</url>    
+    
+    <licenses>
+        <license>
+            <name>The MIT License</name>
+            <url>https://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Thomas Kuenneth</name>
+            <email>thomas@thomaskuenneth.eu</email>
+            <organization>thomaskuenneth.eu</organization>
+            <organizationUrl>https://www.thomaskuenneth.eu</organizationUrl>
+        </developer>
+    </developers>        
+
+    <scm>
+        <connection>scm:git:https://github.com/tkuenneth/nativeparameterstoreaccess.git</connection>
+        <developerConnection>scm:git:https://github.com/tkuenneth/nativeparameterstoreaccess.git</developerConnection>
+        <url>https://github.com/tkuenneth/nativeparameterstoreaccess</url>
+    </scm>
+        
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

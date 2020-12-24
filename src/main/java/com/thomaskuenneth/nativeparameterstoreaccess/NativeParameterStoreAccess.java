@@ -35,9 +35,9 @@ import java.util.logging.Logger;
  * @author Thomas Kuenneth
  */
 public final class NativeParameterStoreAccess {
-    
+
     private static final Logger LOGGER = Logger.getLogger(NativeParameterStoreAccess.class.getPackageName());
-    
+
     private NativeParameterStoreAccess() {
     }
 
@@ -72,7 +72,6 @@ public final class NativeParameterStoreAccess {
             String type,
             StringBuilder stderr) {
         StringBuilder stdin = new StringBuilder();
-        stderr.setLength(0);
         String result = null;
         String cmd = String.format("reg query \"%s\" /v %s", key, value);
         if (execute(stdin, stderr, cmd)) {
@@ -92,8 +91,20 @@ public final class NativeParameterStoreAccess {
      * @return the result or an empty string
      */
     public static String getDefaultsEntry(String key) {
-        StringBuilder stdin = new StringBuilder();
         StringBuilder stderr = new StringBuilder();
+        return getDefaultsEntry(key, stderr);
+    }
+
+    /**
+     * Gets an entry from the Defaults database.
+     *
+     * @param key the key, for example <code>"AppleInterfaceStyle"</code>
+     * @param stderr may contain error messages
+     * @return the result or an empty string
+     */
+    public static String getDefaultsEntry(String key,
+            StringBuilder stderr) {
+        StringBuilder stdin = new StringBuilder();
         String result = null;
         String cmd = String.format("defaults read -g %s", key);
         if (execute(stdin, stderr, cmd)) {
@@ -101,11 +112,13 @@ public final class NativeParameterStoreAccess {
         }
         return result;
     }
-    
-    private static boolean execute(StringBuilder sbIS,
-            StringBuilder sbES,
+
+    private static boolean execute(StringBuilder stdin,
+            StringBuilder stderr,
             String cmd) {
         boolean success = false;
+        stdin.setLength(0);
+        stderr.setLength(0);
         try {
             Process p = Runtime.getRuntime().exec(cmd);
             InputStream is = p.getInputStream();
@@ -130,10 +143,10 @@ public final class NativeParameterStoreAccess {
                     esData = -1;
                 }
                 if (isData != -1) {
-                    sbIS.append((char) isData);
+                    stdin.append((char) isData);
                 }
                 if (esData != -1) {
-                    sbES.append((char) esData);
+                    stderr.append((char) esData);
                 }
                 hasData = isData != -1 || esData != -1;
             }

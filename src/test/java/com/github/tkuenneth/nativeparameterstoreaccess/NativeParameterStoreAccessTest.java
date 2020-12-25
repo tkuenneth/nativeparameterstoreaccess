@@ -24,6 +24,7 @@
 package com.github.tkuenneth.nativeparameterstoreaccess;
 
 import static com.github.tkuenneth.nativeparameterstoreaccess.NativeParameterStoreAccess.*;
+import static com.github.tkuenneth.nativeparameterstoreaccess.NativeParameterStoreAccess.REG_TYPE.REG_SZ;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -43,7 +44,7 @@ public class NativeParameterStoreAccessTest {
         assumeTrue(IS_WINDOWS);
         String key = "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion";
         String value = "ProductName";
-        String type = "REG_SZ";
+        REG_TYPE type = REG_SZ;
         String result = getWindowsRegistryEntry(key, value, type);
         assertTrue(result.contains("Windows"));
     }

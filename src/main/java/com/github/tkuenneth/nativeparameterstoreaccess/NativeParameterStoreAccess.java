@@ -49,6 +49,13 @@ public final class NativeParameterStoreAccess {
      */
     public static final boolean IS_MACOS = OS_NAME_LC.contains("mac os x");
 
+    /**
+     * Windows registry types
+     */
+    public enum REG_TYPE {
+        REG_BINARY, REG_DWORD, REG_EXPAND_SZ, REG_MULTI_SZ, REG_SZ
+    }
+
     private NativeParameterStoreAccess() {
     }
 
@@ -58,12 +65,12 @@ public final class NativeParameterStoreAccess {
      * @param key the key, for example
      * <code>"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"</code>
      * @param value the value, for example <code>"AppsUseLightTheme"</code>
-     * @param type the type, for example <code>"REG_DWORD"</code>
+     * @param type the type, for example <code>REG_DWORD</code>
      * @return the result or an empty string
      */
     public static String getWindowsRegistryEntry(String key,
             String value,
-            String type) {
+            REG_TYPE type) {
         StringBuilder stderr = new StringBuilder();
         return getWindowsRegistryEntry(key, value, type, stderr);
     }
@@ -74,13 +81,13 @@ public final class NativeParameterStoreAccess {
      * @param key the key, for example
      * <code>"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"</code>
      * @param value the value, for example <code>"AppsUseLightTheme"</code>
-     * @param type the type, for example <code>"REG_DWORD"</code>
+     * @param type the type, for example <code>REG_DWORD</code>
      * @param stderr may contain error messages
      * @return the result or an empty string
      */
     public static String getWindowsRegistryEntry(String key,
             String value,
-            String type,
+            REG_TYPE type,
             StringBuilder stderr) {
         String result = null;
         if (IS_WINDOWS) {
@@ -88,9 +95,10 @@ public final class NativeParameterStoreAccess {
             String cmd = String.format("reg query \"%s\" /v %s", key, value);
             if (execute(stdin, stderr, cmd)) {
                 String temp = stdin.toString();
-                int pos = temp.indexOf(type);
+                String stringType = type.toString();
+                int pos = temp.indexOf(stringType);
                 if (pos >= 0) {
-                    result = temp.substring(pos + type.length()).trim();
+                    result = temp.substring(pos + stringType.length()).trim();
                 }
             }
         }

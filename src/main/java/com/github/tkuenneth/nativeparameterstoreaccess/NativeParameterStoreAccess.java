@@ -151,27 +151,11 @@ public final class NativeParameterStoreAccess {
             } catch (InterruptedException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
             }
-            boolean hasData = true;
-            int isData;
-            int esData;
-            while (hasData) {
-                if (is.available() > 0) {
-                    isData = is.read();
-                } else {
-                    isData = -1;
-                }
-                if (es.available() > 0) {
-                    esData = es.read();
-                } else {
-                    esData = -1;
-                }
-                if (isData != -1) {
-                    stdin.append((char) isData);
-                }
-                if (esData != -1) {
-                    stderr.append((char) esData);
-                }
-                hasData = isData != -1 || esData != -1;
+            while (is.available() > 0) {
+                stdin.append((char) is.read());
+            }
+            while (es.available() > 0) {
+                stderr.append((char) es.read());
             }
             success = true;
         } catch (IOException e) {

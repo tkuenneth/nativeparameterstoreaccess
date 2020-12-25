@@ -89,7 +89,7 @@ public final class NativeParameterStoreAccess {
             String value,
             REG_TYPE type,
             StringBuilder stderr) {
-        String result = null;
+        String result = "";
         if (IS_WINDOWS) {
             StringBuilder stdin = new StringBuilder();
             String cmd = String.format("reg query \"%s\" /v %s", key, value);
@@ -125,7 +125,7 @@ public final class NativeParameterStoreAccess {
      */
     public static String getDefaultsEntry(String key,
             StringBuilder stderr) {
-        String result = null;
+        String result = "";
         if (IS_MACOS) {
             StringBuilder stdin = new StringBuilder();
             String cmd = String.format("defaults read -g %s", key);

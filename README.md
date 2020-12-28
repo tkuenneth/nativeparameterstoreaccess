@@ -1,7 +1,7 @@
 ## Welcome to Native Parameter Store Acess
-### A small Java library to access the Windows registry and the macOS Defaults database
+### A small Java library to access the Windows Registry and the macOS Defaults database
 
-Sometime you need to access the Windows registry or the macOS Defaults database in your Java or Kotlin apps. While the Java standard class library includes the Preferecnes api to read and write app-specific values, you cannot use it to access system settings. That's what this tiny library is for.
+Sometime you need to access the Windows Registry or the macOS Defaults database in your Java or Kotlin apps. While the Java standard class library includes the Preferences api to read and write app-specific values, you cannot use it to access system settings. That's what this tiny library is for.
 
 #### Examples
 

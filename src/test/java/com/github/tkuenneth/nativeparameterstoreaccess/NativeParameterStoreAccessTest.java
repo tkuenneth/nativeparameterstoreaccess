@@ -52,7 +52,8 @@ public class NativeParameterStoreAccessTest {
     }
 
     /**
-     * Test if toggling dark mode works
+     * Test if toggling dark mode works. After that the previous data is
+     * restored.
      */
     @Test
     public void testSetWindowsRegistryEntry() {
@@ -61,7 +62,10 @@ public class NativeParameterStoreAccessTest {
         String value = "AppsUseLightTheme";
         int currentData = getWindowsRegistryEntry(key, value);
         int newData = currentData == 0 ? 1 : 0;
-        assertTrue(setWindowsRegistryEntry(key, value, newData));
-        assertTrue(newData == getWindowsRegistryEntry(key, value));
+        boolean success = setWindowsRegistryEntry(key, value, newData);
+        int fetchedData = getWindowsRegistryEntry(key, value);
+        setWindowsRegistryEntry(key, value, currentData);
+        assertTrue(success);
+        assertTrue(newData == fetchedData);
     }
 }

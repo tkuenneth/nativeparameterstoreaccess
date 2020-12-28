@@ -88,4 +88,19 @@ public class WindowsRegistry {
         }
         return result;
     }
+
+    /**
+     * Gets a <code>REG_DWORD</code> from the Windows registry.
+     * <code>NumberFormatException</code> may be thrown if the result cannot be
+     * obtained, or if it is not a number.
+     *
+     * @param key the key, for example
+     * <code>"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"</code>
+     * @param value the value, for example <code>"AppsUseLightTheme"</code>
+     * @return the result
+     */
+    public static int getWindowsRegistryEntry(String key, String value) {
+        var result = getWindowsRegistryEntry(key, value, REG_TYPE.REG_DWORD);
+        return Integer.decode(result);
+    }
 }

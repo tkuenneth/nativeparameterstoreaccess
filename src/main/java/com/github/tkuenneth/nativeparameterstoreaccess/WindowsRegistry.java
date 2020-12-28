@@ -47,8 +47,8 @@ public class WindowsRegistry {
      * Gets an entry from the Windows registry.
      *
      * @param key the key, for example
-     * <code>"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"</code>
-     * @param value the value, for example <code>"AppsUseLightTheme"</code>
+     * <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize</code>
+     * @param value the value, for example <code>AppsUseLightTheme</code>
      * @param type the type, for example <code>REG_DWORD</code>
      * @return the result or an empty string
      */
@@ -63,8 +63,8 @@ public class WindowsRegistry {
      * Gets an entry from the Windows registry.
      *
      * @param key the key, for example
-     * <code>"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"</code>
-     * @param value the value, for example <code>"AppsUseLightTheme"</code>
+     * <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize</code>
+     * @param value the value, for example <code>AppsUseLightTheme</code>
      * @param type the type, for example <code>REG_DWORD</code>
      * @param stderr may contain error messages
      * @return the result or an empty string
@@ -95,12 +95,58 @@ public class WindowsRegistry {
      * obtained, or if it is not a number.
      *
      * @param key the key, for example
-     * <code>"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"</code>
-     * @param value the value, for example <code>"AppsUseLightTheme"</code>
+     * <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize</code>
+     * @param value the value, for example <code>AppsUseLightTheme</code>
      * @return the result
      */
     public static int getWindowsRegistryEntry(String key, String value) {
         var result = getWindowsRegistryEntry(key, value, REG_TYPE.REG_DWORD);
         return Integer.decode(result);
+    }
+
+    /**
+     * Writes a <code>REG_DWORD</code> into the Windows registry.
+     *
+     * @param key the key, for example
+     * <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize</code>
+     * @param value the value, for example <code>AppsUseLightTheme</code>
+     * @param data the data to be written
+     * @return if successful <code>true</code>, otherwise <code>false</code>
+     */
+    public static boolean setWindowsRegistryEntry(String key,
+            String value,
+            int data) {
+        StringBuilder stderr = new StringBuilder();
+        return setWindowsRegistryEntry(key, value,
+                Integer.toHexString(data),
+                REG_TYPE.REG_DWORD, stderr);
+    }
+
+    /**
+     * Writes a <code>REG_DWORD</code> into the Windows registry.
+     *
+     * @param key the key, for example
+     * <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize</code>
+     * @param value the value, for example <code>AppsUseLightTheme</code>
+     * @param data the data to be written
+     * @param type the type, for example <code>REG_DWORD</code>
+     * @param stderr may contain error messages
+     * @return if successful <code>true</code>, otherwise <code>false</code>
+     */
+    public static boolean setWindowsRegistryEntry(String key,
+            String value,
+            String data,
+            REG_TYPE type,
+            StringBuilder stderr) {
+        boolean result = false;
+        if (IS_WINDOWS) {
+            StringBuilder stdin = new StringBuilder();
+            String cmd = String.format("reg add \"%s\" /v %s /t %s /d %s /f",
+                    key, value, type.toString(), data);
+            if (execute(stdin, stderr, cmd)) {
+                result = true;
+            }
+        }
+        return result;
     }
 }

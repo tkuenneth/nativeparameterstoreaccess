@@ -26,7 +26,7 @@ package com.github.tkuenneth.nativeparameterstoreaccess;
 import static com.github.tkuenneth.nativeparameterstoreaccess.NativeParameterStoreAccess.*;
 import com.github.tkuenneth.nativeparameterstoreaccess.WindowsRegistry.REG_TYPE;
 import static com.github.tkuenneth.nativeparameterstoreaccess.WindowsRegistry.REG_TYPE.REG_SZ;
-import static com.github.tkuenneth.nativeparameterstoreaccess.WindowsRegistry.getWindowsRegistryEntry;
+import static com.github.tkuenneth.nativeparameterstoreaccess.WindowsRegistry.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -49,5 +49,19 @@ public class NativeParameterStoreAccessTest {
         REG_TYPE type = REG_SZ;
         String result = getWindowsRegistryEntry(key, value, type);
         assertTrue(result.contains("Windows"));
+    }
+
+    /**
+     * Test if toggling dark mode works
+     */
+    @Test
+    public void testSetWindowsRegistryEntry() {
+        assumeTrue(IS_WINDOWS);
+        String key = "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
+        String value = "AppsUseLightTheme";
+        int currentData = getWindowsRegistryEntry(key, value);
+        int newData = currentData == 0 ? 1 : 0;
+        assertTrue(setWindowsRegistryEntry(key, value, newData));
+        assertTrue(newData == getWindowsRegistryEntry(key, value));
     }
 }

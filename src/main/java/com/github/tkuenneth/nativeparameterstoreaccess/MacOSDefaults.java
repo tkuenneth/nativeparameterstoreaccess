@@ -39,7 +39,7 @@ public class MacOSDefaults {
     /**
      * Gets an entry from the Defaults database.
      *
-     * @param key the key, for example <code>"AppleInterfaceStyle"</code>
+     * @param key the key, for example <code>AppleInterfaceStyle</code>
      * @return the result or an empty string
      */
     public static String getDefaultsEntry(String key) {
@@ -50,7 +50,7 @@ public class MacOSDefaults {
     /**
      * Gets an entry from the Defaults database.
      *
-     * @param key the key, for example <code>"AppleInterfaceStyle"</code>
+     * @param key the key, for example <code>AppleInterfaceStyle</code>
      * @param stderr may contain error messages
      * @return the result or an empty string
      */

@@ -24,7 +24,9 @@
 package com.github.tkuenneth.nativeparameterstoreaccess;
 
 import static com.github.tkuenneth.nativeparameterstoreaccess.NativeParameterStoreAccess.*;
-import static com.github.tkuenneth.nativeparameterstoreaccess.NativeParameterStoreAccess.REG_TYPE.REG_SZ;
+import com.github.tkuenneth.nativeparameterstoreaccess.WindowsRegistry.REG_TYPE;
+import static com.github.tkuenneth.nativeparameterstoreaccess.WindowsRegistry.REG_TYPE.REG_SZ;
+import static com.github.tkuenneth.nativeparameterstoreaccess.WindowsRegistry.getWindowsRegistryEntry;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;

@@ -29,15 +29,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Provides access to native parameter stores (Windows registry and macOS
- * defaults).
+ * A couple of constants.
  *
  * @author Thomas Kuenneth
  */
 public final class NativeParameterStoreAccess {
 
-    private static final Logger LOGGER = Logger.getLogger(NativeParameterStoreAccess.class.getPackageName());
-    private static final String OS_NAME_LC = System.getProperty("os.name", "").toLowerCase();
+    static final Logger LOGGER = Logger.getLogger(NativeParameterStoreAccess.class.getPackageName());
+    static final String OS_NAME_LC = System.getProperty("os.name", "").toLowerCase();
 
     /**
      * If running on Windows, <code>true</code> otherwise <code>false</code>
@@ -49,94 +48,10 @@ public final class NativeParameterStoreAccess {
      */
     public static final boolean IS_MACOS = OS_NAME_LC.contains("mac os x");
 
-    /**
-     * Windows registry types
-     */
-    public enum REG_TYPE {
-        REG_BINARY, REG_DWORD, REG_EXPAND_SZ, REG_MULTI_SZ, REG_SZ
-    }
-
     private NativeParameterStoreAccess() {
     }
 
-    /**
-     * Gets an entry from the Windows registry.
-     *
-     * @param key the key, for example
-     * <code>"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"</code>
-     * @param value the value, for example <code>"AppsUseLightTheme"</code>
-     * @param type the type, for example <code>REG_DWORD</code>
-     * @return the result or an empty string
-     */
-    public static String getWindowsRegistryEntry(String key,
-            String value,
-            REG_TYPE type) {
-        StringBuilder stderr = new StringBuilder();
-        return getWindowsRegistryEntry(key, value, type, stderr);
-    }
-
-    /**
-     * Gets an entry from the Windows registry.
-     *
-     * @param key the key, for example
-     * <code>"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"</code>
-     * @param value the value, for example <code>"AppsUseLightTheme"</code>
-     * @param type the type, for example <code>REG_DWORD</code>
-     * @param stderr may contain error messages
-     * @return the result or an empty string
-     */
-    public static String getWindowsRegistryEntry(String key,
-            String value,
-            REG_TYPE type,
-            StringBuilder stderr) {
-        String result = "";
-        if (IS_WINDOWS) {
-            StringBuilder stdin = new StringBuilder();
-            String cmd = String.format("reg query \"%s\" /v %s", key, value);
-            if (execute(stdin, stderr, cmd)) {
-                String temp = stdin.toString();
-                String stringType = type.toString();
-                int pos = temp.indexOf(stringType);
-                if (pos >= 0) {
-                    result = temp.substring(pos + stringType.length()).trim();
-                }
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Gets an entry from the Defaults database.
-     *
-     * @param key the key, for example <code>"AppleInterfaceStyle"</code>
-     * @return the result or an empty string
-     */
-    public static String getDefaultsEntry(String key) {
-        StringBuilder stderr = new StringBuilder();
-        return getDefaultsEntry(key, stderr);
-    }
-
-    /**
-     * Gets an entry from the Defaults database.
-     *
-     * @param key the key, for example <code>"AppleInterfaceStyle"</code>
-     * @param stderr may contain error messages
-     * @return the result or an empty string
-     */
-    public static String getDefaultsEntry(String key,
-            StringBuilder stderr) {
-        String result = "";
-        if (IS_MACOS) {
-            StringBuilder stdin = new StringBuilder();
-            String cmd = String.format("defaults read -g %s", key);
-            if (execute(stdin, stderr, cmd)) {
-                result = stdin.toString().trim();
-            }
-        }
-        return result;
-    }
-
-    private static boolean execute(StringBuilder stdin,
+    static boolean execute(StringBuilder stdin,
             StringBuilder stderr,
             String cmd) {
         boolean success = false;

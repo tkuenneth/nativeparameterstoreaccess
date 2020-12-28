@@ -124,6 +124,10 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                        <!-- See https://stackoverflow.com/a/64057179 -->
+                        <configuration>
+                            <release>11</release>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

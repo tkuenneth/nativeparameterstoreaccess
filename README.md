@@ -3,6 +3,28 @@
 
 Sometime you need to access the Windows Registry or the macOS Defaults database in your Java or Kotlin apps. While the Java standard class library includes the Preferences api to read and write app-specific values, you cannot use it to access system settings. That's what this tiny library is for.
 
+#### Include in your project
+
+It is very easy to add the library to your project.
+
+##### Maven
+
+```xml
+<dependency>
+  <groupId>com.github.tkuenneth</groupId>
+  <artifactId>nativeparameterstoreaccess</artifactId>
+  <version>0.1.0</version>
+</dependency>
+```
+
+##### Gradle
+
+```
+dependencies {
+  implementation("com.github.tkuenneth:nativeparameterstoreaccess:0.1.0")
+}
+```
+
 #### Examples
 
 This Kotlin example shows how to detect if the system (macOS or Windows) is using a dark theme.

@@ -13,7 +13,7 @@ It is very easy to add the library to your project.
 <dependency>
   <groupId>com.github.tkuenneth</groupId>
   <artifactId>nativeparameterstoreaccess</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
 </dependency>
 ```
 
@@ -21,7 +21,7 @@ It is very easy to add the library to your project.
 
 ```
 dependencies {
-  implementation("com.github.tkuenneth:nativeparameterstoreaccess:0.1.0")
+  implementation("com.github.tkuenneth:nativeparameterstoreaccess:0.1.1")
 }
 ```
 

@@ -25,8 +25,6 @@ package com.github.tkuenneth.nativeparameterstoreaccess;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * A couple of constants.
@@ -35,7 +33,6 @@ import java.util.logging.Logger;
  */
 public final class NativeParameterStoreAccess {
 
-    static final Logger LOGGER = Logger.getLogger(NativeParameterStoreAccess.class.getPackageName());
     static final String OS_NAME_LC = System.getProperty("os.name", "").toLowerCase();
 
     /**
@@ -64,7 +61,7 @@ public final class NativeParameterStoreAccess {
             try {
                 p.waitFor();
             } catch (InterruptedException e) {
-                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+                stderr.append(e.toString());
             }
             while (is.available() > 0) {
                 stdin.append((char) is.read());
@@ -74,7 +71,7 @@ public final class NativeParameterStoreAccess {
             }
             success = true;
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            stderr.append(e.toString());
         }
         return success;
     }

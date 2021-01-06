@@ -33,8 +33,8 @@ import static com.github.tkuenneth.nativeparameterstoreaccess.NativeParameterSto
 public class Dconf {
 
     /**
-     * Is <code>true</code> if the operating system is Linux and
-     * dconf is present, otherwise <code>false</code>
+     * Is <code>true</code> if the operating system is Linux and dconf is
+     * present, otherwise <code>false</code>
      */
     public static final boolean HAS_DCONF = hasDconf();
 
@@ -44,7 +44,8 @@ public class Dconf {
     /**
      * Gets an entry from dconf.
      *
-     * @param key the key, for example <code>/org/gnome/desktop/interface/gtk-theme>
+     * @param key the key, for example
+     * <code>/org/gnome/desktop/interface/gtk-theme</code>
      * @return the result or an empty string
      */
     public static String getDconfEntry(String key) {
@@ -55,12 +56,13 @@ public class Dconf {
     /**
      * Gets an entry from dconf.
      *
-     * @param key the key, for example <code>/org/gnome/desktop/interface/gtk-theme>
+     * @param key the key, for example
+     * <code>/org/gnome/desktop/interface/gtk-theme</code>
      * @param stderr may contain error messages
      * @return the result or an empty string
      */
     public static String getDconfEntry(String key,
-                                       StringBuilder stderr) {
+            StringBuilder stderr) {
         String result = "";
         if (IS_LINUX) {
             StringBuilder stdin = new StringBuilder();
@@ -72,7 +74,7 @@ public class Dconf {
         return result;
     }
 
-    private static final boolean hasDconf() {
+    private static boolean hasDconf() {
         boolean result = false;
         if (IS_LINUX) {
             StringBuilder stdin = new StringBuilder();

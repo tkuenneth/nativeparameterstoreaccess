@@ -32,6 +32,12 @@ import static com.github.tkuenneth.nativeparameterstoreaccess.NativeParameterSto
  */
 public class Dconf {
 
+    /**
+     * Is <code>true</code> if the operating system is Linux and
+     * dconf is present, otherwise <code>false</code>
+     */
+    public static final boolean HAS_DCONF = hasDconf();
+
     private Dconf() {
     }
 
@@ -66,4 +72,16 @@ public class Dconf {
         return result;
     }
 
+    private static final boolean hasDconf() {
+        boolean result = false;
+        if (IS_LINUX) {
+            StringBuilder stdin = new StringBuilder();
+            StringBuilder stderr = new StringBuilder();
+            String cmd = "dconf list /";
+            if (execute(stdin, stderr, cmd)) {
+                result = stdin.length() > 0 && stderr.length() == 0;
+            }
+        }
+        return result;
+    }
 }

@@ -31,22 +31,24 @@ dependencies {
 
 #### Examples
 
-This Kotlin example shows how to detect if the system (macOS or Windows) is using a dark theme.
+This Kotlin example shows how to detect if the system (macOS, Linux with dconf or Windows) is using a dark theme.
 
 ```kotlin
-fun isSystemInDarkTheme(): Boolean {
-    return when {
-        IS_WINDOWS -> {
-            val result = getWindowsRegistryEntry(
-                    "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
-                    "AppsUseLightTheme")
-            result == 0x0
-        }
-        IS_MACOS -> {
-            val result = getDefaultsEntry("AppleInterfaceStyle")
-            result == "Dark"
-        }
-        else -> false
+fun isSystemInDarkTheme(): Boolean = when {
+    IS_WINDOWS -> {
+        val result = WindowsRegistry.getWindowsRegistryEntry(
+                "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+                "AppsUseLightTheme")
+        result == 0x0
     }
+    IS_MACOS -> {
+        val result = MacOSDefaults.getDefaultsEntry("AppleInterfaceStyle")
+        result == "Dark"
+    }
+    HAS_DCONF -> {
+        val result = Dconf.getDconfEntry("/org/gnome/desktop/interface/gtk-theme")
+        result.toLowerCase().contains("dark")
+    }
+    else -> false
 }
 ```

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Thomas Kuenneth
+ * Copyright (c) 2020 - 2024 Thomas Kuenneth
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -76,7 +76,7 @@ public final class NativeParameterStoreAccess {
             }
             success = true;
         } catch (IOException e) {
-            stderr.append(e.toString());
+            stderr.append(e);
         }
         return success;
     }

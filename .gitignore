@@ -2,5 +2,7 @@ target/
 /nbproject/
 nativeparameterstoreaccess.iml
 .idea/
+maven-repo/
 
 nbactions.xml
+**/.DS_Store

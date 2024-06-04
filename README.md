@@ -2,7 +2,7 @@
 
 ### A small Java library to access the Windows Registry, macOS Defaults database and dconf.
 
-Sometime you need to access the Windows Registry, the macOS Defaults database or dconf in your Java or Kotlin apps.
+Sometimes you need to access the Windows Registry, the macOS Defaults database or dconf in your Java or Kotlin apps.
 While the Java standard class library includes the Preferences api to read and write app-specific values, you cannot use
 it to access system settings. That's what this tiny library is for.
 
